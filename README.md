@@ -6,7 +6,7 @@ Code for the paper:
   >
   > Jeremy A. Irvin, Andrew A. Kondrich, Michael Ko, Pranav Rajpurkar, Behzad Haghgoo, Bruce E. Landon, Robert L. Phillips, Stephen Petterson, Andrew Y. Ng, Sanjay Basu 
 
-Given demographic and diagnosis information (and optional ZIP code) of a patient, predict prospective annual healthcare spending using a trained LightGBM regression Model as described in our paper.
+Given demographic and diagnosis information (and optional ZIP code) of a patient, predict prospective annual healthcare spending using a trained LightGBM regression model as described in our paper.
 
 ## Usage
 
