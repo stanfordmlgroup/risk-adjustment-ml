@@ -6,21 +6,21 @@ Code for the paper:
   >
   > Jeremy A. Irvin, Andrew A. Kondrich, Michael Ko, Pranav Rajpurkar, Behzad Haghgoo, Bruce E. Landon, Robert L. Phillips, Stephen Petterson, Andrew Y. Ng, Sanjay Basu 
 
-Given patient demographic and diagnoses information for a collection of patients, predict prospective insurance cost using a trained LightGBM Regression Model as described in our paper.
+Given demographic and diagnosis information (and optional ZIP code) of a patient, predict prospective annual healthcare spending using a trained LightGBM regression Model as described in our paper.
 
 ## Usage
 
 ### Environment Setup
-1. Please have [Anaconda](https://docs.conda.io/en/latest/miniconda.html) installed to create a Python virtual environment.
-2. Clone repo with `https://github.com/stanfordmlgroup/risk-adjustment-ml`.
-3. Go into the cloned repo: `cd risk-adjustment-ml`.
+1. Please install [Anaconda](https://docs.conda.io/en/latest/miniconda.html) in order to create a Python environment.
+2. Clone this repo (from the command-line, `git clone git@github.com:stanfordmlgroup/risk-adjustment-ml.git`.
+3. Navigate to the cloned repo: `cd risk-adjustment-ml`.
 4. Create the environment: `conda env create -f environment.yml`.
 5. Activate the environment: `source activate ra-ml`.
 
 ### Preprocessing
-We format the data in the form of a CSV with columns: Patient (Integer), Age (Integer), Sex (Char: M/F), 5-digit ZIP code (Integer, optional), as well as a list of ICD-10 Diagnoses (Comma-delimited quote string). An optional ZIP column is needed to run the SDH-based model. Each patient should be put on their own row. 
+We format the data in a CSV with columns: Patient (Integer), Age (Integer), Sex (Char: M/F), 5-digit ZIP code (Integer, optional), as well as a list of ICD-10 Diagnoses (Comma-delimited quote string). An optional "Zipcode" column is needed to run the SDH-based model. Each patient should be placed on their own row. 
 
-The following is a toy example CSV:
+The following is a toy example CSV (see [the example](https://github.com/stanfordmlgroup/risk-adjustment-ml/blob/master/demo.csv)):
 
 
 | Patient         | Age | Sex | Zipcode | ICD10                 | 
@@ -32,11 +32,13 @@ The following is a toy example CSV:
 | 5               | 50  | F   | 800     | "N15.9,N30.00"        | 
 
 
-### Evaluation
+### Inference
 
-The script can be run in python using the following flags:
+The script can be run using Python with the following flags:
 
-`python run.py --csv_path path/to/data --model_path path/to/saved/weights --save_path path/to/save/output`
+`python run.py --csv_path path/to/data --model_path path/to/saved/model --save_path path/to/save/output`
 
-Including `--sdh` will automatically run the SDH-based model. This requires zipcode data for each patient row. Model weights can be provided upon request.
+Including `--sdh` will automatically run the SDH-based model. This requires ZIP code data for each patient row. For example, to run the SDH-based model on the demo CSV,
+
+`python run.py --csv_path demo.csv --model_path ml_model_sdh.txt --save_path costs.csv --sdh`
 
