@@ -10,4 +10,5 @@ dependencies:
   - pip=18.1
   - scikit-learn=0.20.0
   - scipy=1.1.0
-
+  - hyperopt
+  - argparse

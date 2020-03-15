@@ -41,16 +41,17 @@ def generate_objective(dataset, tuning_metric):
 
 
 class LightGBM(BaseModel):
-    """XGBoost Class."""
+    """LightGBM Class."""
 
     def __init__(self, tuning_metric='mse',
                  trials='trials', bottom_coding=None,
-                 transform=None, **kwargs):
+                 transform=None, gpu=False, **kwargs):
         """Initialize hyperparameters."""
         super(LightGBM, self).__init__(bottom_coding=bottom_coding,
                                        transform=transform)
         self.model = LGBMRegressor
         self.tuning_metric = tuning_metric
+        self.device = "gpu" if gpu else "cpu"
         self.trials = Trials() \
             if trials == 'trials' \
             else MongoTrials('mongo://localhost:1234/foo_db/jobs',
@@ -61,7 +62,7 @@ class LightGBM(BaseModel):
         """Set the model hyperparameter sweep."""
         self.space = {
             "objective": self.tuning_metric,
-            "device": "gpu",
+            "device": self.device,
             'min_data_in_leaf': hp.choice('min_data_in_leaf', [100, 1000, 300]),
             'boosting_type': hp.choice('boosting_type', ['gbdt']),
             'num_leaves': scope.int(hp.quniform('num_leaves', 30, 250, 1)),
