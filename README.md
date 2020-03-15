@@ -41,4 +41,3 @@ The script can be run using Python with the following flags:
 Including `--sdh` will automatically run the SDH-based model. This requires ZIP code data for each patient row. For example, to run the SDH-based model on the demo CSV,
 
 `python run.py --csv_path demo.csv --model_path ml_model_sdh.txt --save_path costs.csv --sdh`
-

@@ -12,6 +12,8 @@ SDH_TABLE = "./preprocess/sdh_variables.csv"
 
 # General constants.
 PATIENT = "Patient"
+COSTS = "Costs"
+
 # Cost adjustment applied so that predictive ratio
 # was 1.0 on the top-coded set.
 COST_ADJUSTMENT = -89.10665304360737
@@ -230,3 +232,29 @@ def get_sdh_features(df):
         sdh_features_list.append(sparse.csr_matrix(df[var]).T)
 
     return sparse.hstack(sdh_features_list)
+
+def preprocess(df, sdh):
+
+    features_list = []
+    
+    # (Num patients, 284)
+    diag_features = get_diag_features(df)
+    features_list.append(diag_features)
+
+    # (Num patients, 12)
+    sex_age_features = get_sex_age_features(df)
+    features_list.append(sex_age_features)
+
+    if sdh:
+        if ZIPCODE not in df.columns:
+            raise ValueError(f"Must supply a column with header {ZIPCODE} when " +
+                             "running with the --sdh flag.")
+        # (Num patients, 18)
+        sdh_features = get_sdh_features(df)
+        features_list.append(sdh_features)
+
+    all_features = sparse.hstack(features_list, format="csr")
+
+    costs = df[COSTS]
+
+    return all_features, costs

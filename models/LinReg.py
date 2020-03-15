@@ -70,16 +70,16 @@ class LinReg(BaseModel):
 
         # Create param search space
         if type is None:
-            params = [{
+            params = {
                 'type': 'none',
                 'normalize_outcome': False
-            }]
+            }
             self.max_evals = 1
         elif type == 'regular':
-            params = [{
+            params = {
                 'type': 'none',
                 'normalize_outcome': False
-            }],
+            },
             self.max_evals = 1
         elif type == 'l1':
             params = [{

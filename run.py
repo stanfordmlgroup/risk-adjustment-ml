@@ -3,32 +3,7 @@ import pandas as pd
 import lightgbm as lgb
 from pathlib import Path
 
-from preprocess import *
-
-
-def preprocess(df, sdh):
-
-    features_list = []
-    
-    # (Num patients, 284)
-    diag_features = get_diag_features(df)
-    features_list.append(diag_features)
-
-    # (Num patients, 12)
-    sex_age_features = get_sex_age_features(df)
-    features_list.append(sex_age_features)
-
-    if sdh:
-        if ZIPCODE not in df.columns:
-            raise ValueError(f"Must supply a column with header {ZIPCODE} when " +
-                             "running with the --sdh flag.")
-        # (Num patients, 18)
-        sdh_features = get_sdh_features(df)
-        features_list.append(sdh_features)
-
-    all_features = sparse.hstack(features_list, format="csr")
-
-    return all_features
+from preprocess import preprocess
 
 
 def main(args):
@@ -62,7 +37,7 @@ def main(args):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='ML for Risk Adjustment')
+    parser = argparse.ArgumentParser(description='ML for Risk Adjustment Prediction')
     parser.add_argument('--csv_path',
                         required=True,
                         type=str,
