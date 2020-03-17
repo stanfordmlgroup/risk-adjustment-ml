@@ -34,9 +34,9 @@ The following is a toy example CSV (see [the example](https://github.com/stanfor
 
 You can train either a LightGBM or Linear regression model on your data using the following script and flags. This will also perform a hyperparameter search using [hyperopt](https://github.com/hyperopt/hyperopt). 
 
-`python train.py --model [LinReg, LightGBM] --train_path path/to/training/data --test_path path/to/test/data --tuning_metric [mse, mae, huber] --regularizer [regular, l1, l2]`
+`python train.py --model [LinReg, LightGBM] --save_dir path/to/save/model --train_path path/to/training/data --test_path path/to/test/data --tuning_metric [mse, mae, huber] --regularizer [regular, l1, l2]`
 
-If you wish to run the LightGBM model on GPU, add the `--gpu` flag. Once trained, the script will output the model's R2 and MAE scores on the test data. You can bottom code the predictions via `--bottom_coding [value]`. 
+If you wish to run the LightGBM model on GPU, add the `--gpu` flag. Once trained, the script will output the model's R2 and MAE scores on the test data, and save the model weights to `save_dir`. You can bottom code the predictions via `--bottom_coding [value]`. 
 
 ### Inference
 
